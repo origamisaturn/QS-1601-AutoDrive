@@ -1,4 +1,6 @@
-package org.usfirst.frc.team1601.robot;
+package org.usfirst.frc.team1601.threads;
+
+import org.usfirst.frc.team1601.robot.OI;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 

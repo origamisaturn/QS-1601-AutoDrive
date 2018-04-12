@@ -1,4 +1,6 @@
-package org.usfirst.frc.team1601.robot;
+package org.usfirst.frc.team1601.threads;
+
+import org.usfirst.frc.team1601.robot.OI;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -26,7 +28,7 @@ public class DriveTrain extends Thread{
 		while(!killThread) {
 			//LeftSide and RightSide tankDrive
 			if(Math.abs(leftJoystick.getRawAxis(1) - rightJoystick.getRawAxis(1)) <= .05) {
-				differentialDrive.tankDrive(leftJoystick.getRawAxis(1) * OI.leftMotorAdjustConstant * OI.driveTrainMotorsMaxSpeed, rightJoystick.getRawAxis(1) * OI.driveTrainMotorsMaxSpeed * OI.driveTrainMotorsMaxSpeed, true);
+				differentialDrive.tankDrive(leftJoystick.getRawAxis(1) * OI.leftMotorAdjustConstant * OI.driveTrainMotorsMaxSpeed, rightJoystick.getRawAxis(1) * OI.driveTrainMotorsMaxSpeed * OI.driveTrainMotorsMaxSpeed, true); //if statement is correct, what follows doesn't seem right
 			}
 			else {
 				differentialDrive.tankDrive(leftJoystick.getRawAxis(1) * OI.driveTrainMotorsMaxSpeed, rightJoystick.getRawAxis(1) * OI.driveTrainMotorsMaxSpeed, true);

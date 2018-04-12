@@ -10,12 +10,10 @@ package org.usfirst.frc.team1601.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import org.usfirst.frc.team1601.robot.RobotMap;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,41 +22,41 @@ import org.usfirst.frc.team1601.robot.RobotMap;
 public class OI {
 	
 	//Drive Train Motors
-	WPI_TalonSRX leftFrontMotor = new WPI_TalonSRX(RobotMap.leftFrontMotor),
+	public WPI_TalonSRX leftFrontMotor = new WPI_TalonSRX(RobotMap.leftFrontMotor),
 					leftRearMotor = new WPI_TalonSRX(RobotMap.leftRearMotor),
 					rightFrontMotor = new WPI_TalonSRX(RobotMap.rightFrontMotor),
 					rightRearMotor = new WPI_TalonSRX(RobotMap.rightRearMotor),
 					middleWheelMotor = new WPI_TalonSRX(RobotMap.middleWheelMotor);
-	
-	DifferentialDrive differentialDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
-	
 	//Other Motors
-	WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor),
+	public WPI_TalonSRX elevatorMotor = new WPI_TalonSRX(RobotMap.elevatorMotor),
 					leftClawMotor = new WPI_TalonSRX(RobotMap.leftClawMotor),
 					rightClawMotor = new WPI_TalonSRX(RobotMap.rightClawMotor);
 	//Joy Sticks
-	Joystick leftJoystick = new Joystick(RobotMap.leftJoystick),
+	public Joystick leftJoystick = new Joystick(RobotMap.leftJoystick),
 				rightJoystick = new Joystick(RobotMap.rightJoystick);
 	//Limit Switch
-	DigitalInput topLimitSwitch = new DigitalInput(RobotMap.topLimitSwitch),
+	public DigitalInput topLimitSwitch = new DigitalInput(RobotMap.topLimitSwitch),
 					bottomLimitSwitch = new DigitalInput(RobotMap.bottomLimitSwitch);
+	//DifferentialDrive
+	public DifferentialDrive differentialDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
+	//NavX
+	public AHRS navX = new AHRS(SPI.Port.kMXP);
 	
 	//Variables that are important to be accessed quickly.
 	public static double driveTrainMotorsMaxSpeed = .60,
 							middleWheelSetSpeed = .40,
 							elevatorMaxSpeed = .40,
-							ticksPerInch = 200, //test this
-							autoAngleTolerance = 3, //in degrees
-							autoDistanceTolerance = 2;//in inches
+							elevatorStallSpeed = 0;
 	
-	//Encoders
-	//Encoder leftDriveEncoder = new Encoder(RobotMap.leftDriveEncoderA,RobotMap.leftDriveEncoderB, false, Encoder.EncodingType.k4X);
-	//Encoder rightDriveEncoder = new Encoder(RobotMap.rightDriveEncoderA,RobotMap.rightDriveEncoderB, false, Encoder.EncodingType.k4X);
-	
-	//NavX
-	AHRS ahrs = new AHRS(SPI.Port.kMXP);
+	public static double maxClawSpeed = .30;
 	
 	public static double leftMotorAdjustConstant = 1;
 	
 	public static long threadSleepTime = 20;	//miliSecounds
+	
+	//Variables used for autonomous movement.
+	public static int ticksPerInch = 200; //placeholder value, calculate actual value
+    public static double autoAngleTolerance = 3; //in degrees
+   	public static double autoDistanceTolerance = 2;//in inches
+   	public static double autoTurnCoefficient = 0.03;
 }

@@ -31,10 +31,4 @@ public class RobotMap {
 	//Limit Switches
 	public static int topLimitSwitch = 1,
 						bottomLimitSwitch = 2;
-	
-	//Encoders
-	public static int leftDriveEncoderA = 0,
-						leftDriveEncoderB = 1,
-						rightDriveEncoderA = 2,
-						rightDriveEncoderB = 3;
 }

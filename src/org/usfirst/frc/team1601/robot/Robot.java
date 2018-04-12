@@ -7,6 +7,12 @@
 
 package org.usfirst.frc.team1601.robot;
 
+import org.usfirst.frc.team1601.threads.ClawSystem;
+import org.usfirst.frc.team1601.threads.DriveTrain;
+import org.usfirst.frc.team1601.threads.ElevatorSystem;
+
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -21,7 +27,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	public OI m_oi = new OI();
+	public OI mOI;
+	public DriveTrain mDriveTrain;
+	public ElevatorSystem mElevatorSystem;
+	public ClawSystem mClawSystem;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -32,7 +41,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//m_oi = new OI();
+		mOI.leftRearMotor.follow(mOI.leftFrontMotor);
+		mOI.rightRearMotor.follow(mOI.rightFrontMotor);
+		
+		mOI.leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		mOI.rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		
+		mOI = new OI();
+		mDriveTrain = new DriveTrain(mOI.leftJoystick, mOI.rightJoystick, mOI.leftFrontMotor, mOI.rightFrontMotor, mOI.middleWheelMotor, mOI.differentialDrive);
+		mElevatorSystem = new ElevatorSystem(mOI.rightJoystick, mOI.elevatorMotor, mOI.topLimitSwitch, mOI.bottomLimitSwitch);
+		mClawSystem = new ClawSystem(mOI.leftJoystick, mOI.leftClawMotor, mOI.rightClawMotor);
 	}
 
 	/**
@@ -103,6 +121,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		mDriveTrain.start();
+		mElevatorSystem.start();
+		mClawSystem.start();
 	}
 
 	/**
